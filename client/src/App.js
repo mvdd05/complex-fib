@@ -8,8 +8,8 @@ import Fib from './Fib';
 function App() {
   return (
     <Router>
-      <div className="App">
-        <header className="App-header">
+      <div>
+        <header>
           <Link to="/">Home</Link>
           <Link to="/otherpage">Other Page</Link>
         </header>
