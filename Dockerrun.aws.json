@@ -1,0 +1,37 @@
+{
+    "AWSEBDockerrunVersion": 2,
+    "containerDefinitions": [
+        {
+            "name": "client",
+            "image": "mvdd05/complex-fib-client",
+            "hostname": "client",
+            "essential": false
+        },
+        {
+            "name": "server", 
+            "image": "mvdd05/complex-fib-server",
+            "hostname": "api",
+            "essential": false
+        },
+        {
+            "name": "worker", 
+            "image": "mvdd05/complex-fib-worker",
+            "hostname": "worker",
+            "essential": false
+        },
+        {
+            "name": "nginx",
+            "image": "mvdd05/complex-fib-nginx",
+            "hostname": "nginx",
+            "essential": true,
+            "portMappings": [
+                {
+                    "hostport": 80,
+                    "containerPort": 80
+                }
+            ],
+            "links": ["client", "server"]
+        }
+
+    ]
+}
