@@ -1,0 +1,27 @@
+sudo: required
+services: 
+    - docker
+    
+before_install:
+    - docker build -t mvdd05/complex-fib -f ./client/Dockerfile.dev ./client
+    
+script:
+    - docker run -e CI=true mvdd05/complex-fib npm test --coverage
+
+after_success:
+    - docker build -t mvdd05/complex-fib-client ./client
+    - docker build -t mvdd05/complex-fib-nginx ./nginx
+    - docker build -t mvdd05/complex-fib-server ./server
+    - docker build -t mvdd05/complex-fib-worker ./worker
+    
+    # Log in to the docker CLI
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    
+    # Take images and push them to DokcerHub
+    - docker push mvdd05/complex-fib-client
+    - docker push mvdd05/complex-fib-server
+    - docker push mvdd05/complex-fib-worker
+    - docker push mvdd05/complex-fib-nginx
+    
+    
+
